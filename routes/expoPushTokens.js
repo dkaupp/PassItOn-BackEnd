@@ -15,7 +15,6 @@ router.post(
 
     user.expoPushToken = req.body.token;
     user = await user.save();
-    console.log("User registered for notifications: ", user);
     res.status(201).send();
   }
 );
