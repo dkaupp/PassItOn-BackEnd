@@ -27,7 +27,6 @@ const validateCategoryId = async (req, res, next) => {
 };
 
 router.get("/", async (req, res) => {
-  throw new Error("There was and error ");
   const listings = await Listing.find().lean().sort({ _id: -1 });
   if (!listings)
     return res.status(400).send("There was and error loading the listings.");
