@@ -45,7 +45,7 @@ router.get("/:id", auth, async (req, res) => {
   const user = await User.findById(userId);
   if (!user) return res.status(404).send();
 
-  const listings = await Listing.find({ userId }).lean();
+  // const listings = await Listing.find({ userId }).lean();
 
   const imageUrls = user.image.url !== "" ? user.image : "";
 
@@ -53,8 +53,8 @@ router.get("/:id", auth, async (req, res) => {
     _id: user.id,
     name: user.name,
     email: user.email,
-    numberOfListings: listings.length,
-    listings: listings,
+    // numberOfListings: listings.length,
+    // listings: listings,
     location: user.location,
     image: { ...imageUrls },
   });

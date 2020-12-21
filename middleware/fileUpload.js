@@ -21,7 +21,6 @@ const upload = multer({
       cb(null, { fieldName: "TESTING_META_DATA" });
     },
     key: function (req, file, cb) {
-      console.log(file);
       cb(null, Date.now().toString() + file.originalname);
     },
     shouldTransform: function (req, file, cb) {
