@@ -15,6 +15,7 @@ const schema = {
   listingId: Joi.string().required(),
   message: Joi.string().required(),
   read: Joi.boolean(),
+  targetUserId: Joi.string().required(),
 };
 
 router.get("/", auth, async (req, res) => {
@@ -25,12 +26,14 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.post("/", [auth, validateWith(schema)], async (req, res) => {
-  const { listingId, message } = req.body;
+  const { listingId, message, targetUserId } = req.body;
+
+  console.log(targetUserId);
 
   const listing = await Listing.findById(listingId);
   if (!listing) return res.status(400).send({ error: "Invalid listingId." });
 
-  const targetUser = await User.findById(listing.userId);
+  const targetUser = await User.findById(targetUserId);
   if (!targetUser) return res.status(400).send({ error: "Invalid userId." });
 
   let usermessage = new Message({
@@ -62,7 +65,6 @@ router.delete("/:id", auth, async (req, res) => {
 });
 
 router.put("/:id", auth, async (req, res) => {
-  console.log(req.params.id);
   const message = await Message.findByIdAndUpdate(
     req.params.id,
     {
